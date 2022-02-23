@@ -34,8 +34,12 @@
 // Called by D_DoomMain,
 // determines the hardware configuration
 // and sets up the video mode
-void I_InitGraphics (void);
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+void I_InitGraphics (void);
 
 void I_ShutdownGraphics(void);
 
@@ -53,7 +57,9 @@ void I_ReadScreen (byte* scr);
 void I_BeginRead (void);
 void I_EndRead (void);
 
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 //-----------------------------------------------------------------------------
