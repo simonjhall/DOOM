@@ -20,6 +20,8 @@
 //
 //-----------------------------------------------------------------------------
 
+#if 0
+
 static const char
 rcsid[] = "$Id: m_bbox.c,v 1.1 1997/02/03 22:45:10 b1 Exp $";
 
@@ -345,4 +347,50 @@ void I_NetCmd (void)
     else
 	I_Error ("Bad net cmd: %i\n",doomcom->command);
 }
+
+#else
+
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+#include "i_system.h"
+#include "d_event.h"
+#include "d_net.h"
+#include "m_argv.h"
+
+#include "doomstat.h"
+
+void I_NetCmd (void)
+{
+}
+
+void I_InitNetwork (void)
+{
+    boolean		trueval = true;
+    int			i;
+    int			p;
+    struct hostent*	hostentry;	// host information entry
+	
+    doomcom = malloc (sizeof (*doomcom) );
+    memset (doomcom, 0, sizeof(*doomcom) );
+    
+    // set up for network
+	doomcom-> ticdup = 1;
+	
+	doomcom-> extratics = 0;
+		
+    
+    // parse network game options,
+    //  -net <consoleplayer> <host> <host> ...
+	// single player game
+	netgame = false;
+	doomcom->id = DOOMCOM_ID;
+	doomcom->numplayers = doomcom->numnodes = 1;
+	doomcom->deathmatch = false;
+	doomcom->consoleplayer = 0;
+}
+
+#endif
 

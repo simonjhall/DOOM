@@ -208,11 +208,10 @@ void    P_SpawnGlowingLight(sector_t* sector);
 //
 typedef struct
 {
-    char	name1[9];
-    char	name2[9];
-    short	episode;
-    
-} switchlist_t;
+  char name1[9];
+  char name2[9];
+  short episode;
+} PACKEDATTR switchlist_t; //jff 3/23/98 pack to read from memory
 
 
 typedef enum

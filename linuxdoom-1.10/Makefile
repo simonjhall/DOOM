@@ -4,11 +4,15 @@
 #
 # $Log:$
 #
-CC=  gcc  # gcc or g++
 
-CFLAGS=-g -Wall -DNORMALUNIX -DLINUX # -DUSEASM 
-LDFLAGS=-L/usr/X11R6/lib
-LIBS=-lXext -lX11 -lnsl -lm
+# PREFIX=/Users/simon_hall/riscv-linux32/bin/riscv32-unknown-linux-gnu-
+
+CC= $(PREFIX)gcc  # gcc or g++
+
+CFLAGS=-g -Wall -DNORMALUNIX -Wno-unused-const-variable -Werror=pointer-to-int-cast -Werror=int-to-pointer-cast
+# CFLAGS=-march=rv32im -mabi=ilp32 -fno-pie --static -g -Wall -DNORMALUNIX -DLINUX -Wno-unused-const-variable# -DUSEASM 
+# LDFLAGS=-L/usr/X11R6/lib
+# LIBS=-lXext -lX11 -lnsl -lm
 
 # subdirectory for objects
 O=linux
@@ -20,7 +24,7 @@ OBJS=				\
 		$(O)/dstrings.o		\
 		$(O)/i_system.o		\
 		$(O)/i_sound.o		\
-		$(O)/i_video.o		\
+		$(O)/i_video_riscv.o		\
 		$(O)/i_net.o			\
 		$(O)/tables.o			\
 		$(O)/f_finale.o		\
@@ -77,7 +81,7 @@ OBJS=				\
 		$(O)/info.o				\
 		$(O)/sounds.o
 
-all:	 $(O)/linuxxdoom
+all:	 $(O)/linuxxdoom $(O)/linuxxdoom.bin
 
 clean:
 	rm -f *.o *~ *.flc
@@ -86,6 +90,9 @@ clean:
 $(O)/linuxxdoom:	$(OBJS) $(O)/i_main.o
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(O)/i_main.o \
 	-o $(O)/linuxxdoom $(LIBS)
+
+$(O)/linuxxdoom.bin: $(O)/linuxxdoom
+	$(PREFIX)objcopy -O binary $^ $@
 
 $(O)/%.o:	%.c
 	$(CC) $(CFLAGS) -c $< -o $@

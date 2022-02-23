@@ -1113,6 +1113,7 @@ void D_DoomMain (void)
     ST_Init ();
 
     // check for a driver that wants intermission stats
+#if 0
     p = M_CheckParm ("-statcopy");
     if (p && p<myargc-1)
     {
@@ -1122,6 +1123,7 @@ void D_DoomMain (void)
 	statcopy = (void*)atoi(myargv[p+1]);
 	printf ("External statistics registered.\n");
     }
+#endif
     
     // start the apropriate game based on parms
     p = M_CheckParm ("-record");

@@ -21,6 +21,8 @@
 //
 //-----------------------------------------------------------------------------
 
+#if 0
+
 static const char
 rcsid[] = "$Id: i_unix.c,v 1.5 1997/02/03 22:45:10 b1 Exp $";
 
@@ -152,7 +154,6 @@ int*		channelrightvol_lookup[NUM_CHANNELS];
 
 
 
-
 //
 // Safe ioctl, convenience.
 //
@@ -173,7 +174,6 @@ myioctl
 	exit(-1);
     }
 }
-
 
 
 
@@ -395,6 +395,7 @@ addsfx
 //
 void I_SetChannels()
 {
+#if 0
   // Init internal lookups (raw data, mixing buffer, channels).
   // This function sets up internal lookups used during
   //  the mixing process. 
@@ -421,6 +422,7 @@ void I_SetChannels()
   for (i=0 ; i<128 ; i++)
     for (j=0 ; j<256 ; j++)
       vol_lookup[i*256+j] = (i*(j-128)*256)/127;
+#endif
 }	
 
  
@@ -983,3 +985,165 @@ void I_SoundDelTimer()
   if ( I_SoundSetTimer( 0 ) == -1)
     fprintf( stderr, "I_SoundDelTimer: failed to remove interrupt. Doh!\n");
 }
+
+#else
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+#include <math.h>
+
+#include <sys/time.h>
+#include <sys/types.h>
+
+
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+
+// Timer stuff. Experimental.
+#include <time.h>
+#include <signal.h>
+
+#include "z_zone.h"
+
+#include "i_system.h"
+#include "i_sound.h"
+#include "m_argv.h"
+#include "m_misc.h"
+#include "w_wad.h"
+
+#include "doomdef.h"
+
+
+void I_InitSound()
+{
+}
+
+// ... update sound buffer and audio device at runtime...
+void I_UpdateSound(void)
+{
+}
+void I_SubmitSound(void)
+{
+}
+
+// ... shut down and relase at program termination.
+void I_ShutdownSound(void)
+{
+}
+
+void I_SetChannels()
+{
+}
+
+// Get raw data lump index for sound descriptor.
+int I_GetSfxLumpNum (sfxinfo_t* sfx )
+{
+    char namebuf[9];
+    sprintf(namebuf, "ds%s", sfx->name);
+    return W_GetNumForName(namebuf);
+}
+
+int
+I_StartSound
+( int		id,
+  int		vol,
+  int		sep,
+  int		pitch,
+  int		priority )
+{
+  return id;
+}
+
+
+// Stops a sound channel.
+void I_StopSound(int handle)
+{
+}
+
+// Called by S_*() functions
+//  to see if a channel is still playing.
+// Returns 0 if no longer playing, 1 if playing.
+int I_SoundIsPlaying(int handle)
+{
+      // Ouch.
+    return gametic < handle;
+}
+
+// Updates the volume, separation,
+//  and pitch of a sound channel.
+void
+I_UpdateSoundParams
+( int		handle,
+  int		vol,
+  int		sep,
+  int		pitch )
+{
+}
+
+
+//
+//  MUSIC I/O
+//
+void I_InitMusic(void)
+{
+}
+
+void I_ShutdownMusic(void)
+{
+}
+
+// Volume.
+void I_SetMusicVolume(int volume)
+{
+}
+
+// PAUSE game handling.
+void I_PauseSong(int handle)
+{
+}
+
+void I_ResumeSong(int handle)
+{
+}
+
+// Registers a song handle to song data.
+int I_RegisterSong(void *data)
+{
+  // UNUSED.
+  data = NULL;
+  
+  return 1;
+
+}
+
+// Called by anything that wishes to start music.
+//  plays a song, and when the song is done,
+//  starts playing it again in an endless loop.
+// Horrible thing to do, considering.
+void
+I_PlaySong
+( int		handle,
+  int		looping )
+  {
+  
+}
+
+// Stops a song over 3 seconds.
+void I_StopSong(int handle)
+{
+}
+
+// See above (register), then think backwards
+void I_UnRegisterSong(int handle)
+{
+}
+
+
+
+
+#endif
+
+
