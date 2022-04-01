@@ -8,10 +8,14 @@
 #ifndef DISPLAY_H_
 #define DISPLAY_H_
 
+#include <stdint.h>
+
+#ifndef __riscv
 #include <pthread.h>
 #include <SDL2/SDL.h>
 #ifdef __linux__
 #include <linux/input.h>
+#endif
 #endif
 
 class PhysicalMemoryRegion
@@ -73,6 +77,7 @@ private:
 	unsigned char m_palette[256 * 3];
 };
 
+#ifndef __riscv
 class Display
 {
 public:
@@ -95,6 +100,7 @@ private:
 
 	unsigned int keycodes[SDL_SCANCODE_APP2];
 };
+#endif
 
 
 

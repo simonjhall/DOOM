@@ -5,6 +5,8 @@
  *      Author: simon
  */
 
+#ifndef __riscv
+
 #include <assert.h>
 #include "display.h"
 
@@ -228,3 +230,5 @@ void Display::InitKeycodes(void)
 	keycodes[SDL_SCANCODE_RALT] = KEY_RIGHTALT;
 #endif
 }
+
+#endif

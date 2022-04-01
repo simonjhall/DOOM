@@ -610,7 +610,8 @@ void IdentifyVersion (void)
 
     home = getenv("HOME");
     if (!home)
-      I_Error("Please set $HOME to your home directory");
+    //   I_Error("Please set $HOME to your home directory");
+		home = ".";
     sprintf(basedefault, "%s/.doomrc", home);
 #endif
 
@@ -655,7 +656,7 @@ void IdentifyVersion (void)
 	return;
     }
 
-    if ( !access (doom2fwad,R_OK) )
+    /*if ( !access (doom2fwad,R_OK) )
     {
 	gamemode = commercial;
 	// C'est ridicule!
@@ -699,9 +700,9 @@ void IdentifyVersion (void)
       gamemode = registered;
       D_AddFile (doomwad);
       return;
-    }
+    }*/
 
-    if ( !access (doom1wad,R_OK) )
+    // if ( !access (doom1wad,R_OK) )
     {
       gamemode = shareware;
       D_AddFile (doom1wad);
@@ -874,12 +875,12 @@ void D_DoomMain (void)
     if (devparm)
 	printf(D_DEVSTR);
     
-    if (M_CheckParm("-cdrom"))
+    /*if (M_CheckParm("-cdrom"))
     {
 	printf(D_CDROM);
 	mkdir("c:\\doomdata",0);
 	strcpy (basedefault,"c:/doomdata/default.cfg");
-    }	
+    }*/	
     
     // turbo option
     if ( (p=M_CheckParm ("-turbo")) )

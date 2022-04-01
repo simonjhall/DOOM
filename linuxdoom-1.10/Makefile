@@ -5,16 +5,16 @@
 # $Log:$
 #
 
-# PREFIX=/Users/simon_hall/riscv-linux32/bin/riscv32-unknown-linux-gnu-
+PREFIX=/Users/simon_hall/riscv-linux32/bin/riscv32-unknown-linux-gnu-
 
 CC=$(PREFIX)gcc
 CXX=$(PREFIX)g++
 
-CFLAGS=-g -Wall -DNORMALUNIX -Wno-unused-const-variable -Werror=pointer-to-int-cast -Werror=int-to-pointer-cast
-# CFLAGS=-march=rv32im -mabi=ilp32 -fno-pie --static -g -Wall -DNORMALUNIX -DLINUX -Wno-unused-const-variable# -DUSEASM 
+# CFLAGS=-g -Wall -DNORMALUNIX -Wno-unused-const-variable -Werror=pointer-to-int-cast -Werror=int-to-pointer-cast
+CFLAGS=-march=rv32im -mno-div -mabi=ilp32 -fno-pie --static -g -Wall -DNORMALUNIX -DLINUX -Wno-unused-const-variable -Wl,-Tscript_ram.lds -O3
 # LDFLAGS=-L/usr/X11R6/lib
 # LIBS=-lXext -lX11 -lnsl -lm
-LIBS=-lSDL2
+# LIBS=-lSDL2
 
 # subdirectory for objects
 O=linux
