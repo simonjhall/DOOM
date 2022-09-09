@@ -97,6 +97,10 @@ $(O)/linuxxdoom:	$(OBJS) $(O)/i_main.o
 $(O)/linuxxdoom.bin: $(O)/linuxxdoom
 	$(PREFIX)objcopy -O binary $^ $@
 
+$(O)/linuxxdoom.header: $(O)/linuxxdoom $(O)/linuxxdoom.bin
+	~/git/EmbeddedDebugger/args beefcafe `stat -f "%z" $(basename $@).bin` `$(PREFIX)readelf -h $(basename $@) |grep Entry| sed 's/^.*0x//g'` `crc32 $(basename $@).bin`
+	mv header.bin $@
+
 $(O)/%.o:	%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
